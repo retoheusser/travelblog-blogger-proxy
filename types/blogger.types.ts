@@ -17,6 +17,12 @@ export interface BlogPostItem {
   author: Author
   replies: Replies
   etag: string
+  location?: {
+    name: string
+    lat: number
+    lng: number
+    span: string
+  }
 }
 
 export interface Blog {

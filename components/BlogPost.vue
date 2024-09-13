@@ -5,11 +5,12 @@ const { value } = defineProps<{ value: BlogPostItem }>()
 </script>
 
 <template>
-  <div>
+  <v-sheet>
     <div>{{ value.title }}</div>
     <div
       @click="e => $emit('click', e)"
       v-html="value.content"
     />
-  </div>
+    <v-divider />
+  </v-sheet>
 </template>
