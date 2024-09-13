@@ -4,13 +4,14 @@ const posts = computed(() => data.value?.items)
 </script>
 
 <template>
-  <div>
-    <div
-      v-for="post in posts"
-      :key="post.id"
-    >
-      <div>{{ post.title }}</div>
-      <div v-html="post.content" />
-    </div>
-  </div>
+  <LightBox>
+    <template #activator="{ on }">
+      <BlogPost
+        v-for="post in posts"
+        :key="post.id"
+        :value="post"
+        v-on="on"
+      />
+    </template>
+  </LightBox>
 </template>

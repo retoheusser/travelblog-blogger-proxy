@@ -1,43 +1,4 @@
-export interface BlogOverview {
-  kind: string
-  items: BlogPost[]
-  etag: string
-}
-
-export interface BlogPost {
-  kind: string
-  id: string
-  blog: Blog
-  published: string
-  updated: string
-  url: string
-  selfLink: string
-  title: string
-  content: string
-  author: Author
-  replies: Replies
-  etag: string
-}
-
-export interface Blog {
-  id: string
-}
-
-export interface Author {
-  id: string
-  displayName: string
-  url: string
-  image: Image
-}
-
-export interface Image {
-  url: string
-}
-
-export interface Replies {
-  totalItems: string
-  selfLink: string
-}
+import type { BlogOverview } from '~/types/blogger.types'
 
 export default eventHandler(() => {
   const { blogger: { apiKey, blogId } } = useRuntimeConfig()
