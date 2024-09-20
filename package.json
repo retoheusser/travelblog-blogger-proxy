@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "build": "nuxt build --preset=firebase && npm run copyenv",
+    "build": "nuxt build --preset=firebase",
     "copyenv": "cp .env .output/server",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
@@ -11,7 +11,7 @@
     "postinstall": "nuxt prepare",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
-    "deploy": "firebase deploy"
+    "deploy:functions": "npm run build && npm run copyenv && firebase deploy --only functions"
   },
   "dependencies": {
     "@nuxt/eslint": "^0.5.7",
