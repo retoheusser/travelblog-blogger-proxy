@@ -2,6 +2,11 @@
 import type { BlogPostItem } from '../types/blogger.types'
 
 const props = defineProps<{ value: BlogPostItem }>()
+const postUrlHttps = computed(() => {
+  const url = new URL(props.value.url)
+  url.protocol = 'https:'
+  return url.toString()
+})
 defineEmits<{
   (e: 'click', event: MouseEvent): void
 }>()
@@ -24,7 +29,7 @@ defineEmits<{
       <!-- invisibly loading the real blogpost page counts as a view on Blogger -->
       <iframe
         class="d-none"
-        :src="props.value.url"
+        :src="postUrlHttps"
       />
     </v-lazy>
   </v-sheet>
