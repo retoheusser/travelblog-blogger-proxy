@@ -39,7 +39,7 @@ export default defineNuxtConfig({
       httpsOptions: {
         region: 'europe-west1',
       },
-      nodeVersion: '20'
-    }
-  }
+      nodeVersion: '20',
+    },
+  },
 })
