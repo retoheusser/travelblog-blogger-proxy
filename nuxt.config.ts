@@ -16,9 +16,7 @@ export default defineNuxtConfig({
   vuetify: {
     vuetifyOptions: './vuetify.config.ts',
   },
-  routeRules: {
-    // '/': { ssr: true, cache: { maxAge: 60, staleMaxAge: 3600, swr: true } },
-  },
+  ssr: false,
   runtimeConfig: {
     blogger: {
       apiKey: '',
@@ -35,4 +33,13 @@ export default defineNuxtConfig({
     },
   },
   css: ['./font.css'],
+  nitro: {
+    firebase: {
+      gen: 2,
+      httpsOptions: {
+        region: 'europe-west1',
+      },
+      nodeVersion: '20'
+    }
+  }
 })

@@ -1,3 +1,4 @@
+import { $fetch } from 'ofetch'
 import type { BlogOverview } from '~/types/blogger.types'
 
 export default eventHandler(() => {
