@@ -8,6 +8,7 @@ defineEmits<{
 </script>
 
 <template>
+  <!-- eslint-disable vue/no-v-html -->
   <v-sheet
     color="amber-lighten-5"
     class="my-8 pa-4"
