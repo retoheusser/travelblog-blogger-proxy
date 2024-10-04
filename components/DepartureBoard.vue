@@ -6,30 +6,32 @@ const { currentlyVisibleTitle } = storeToRefs(useIntersectStore())
 const letterCount = computed(() => Math.min(Math.round(width.value / 22), 24))
 const departureBoardRef = ref<HTMLDivElement | null>(null)
 let isInitialized = false
-let board: { setValue: (content: string) => void }
+let board: { setValue: (content: string | string[]) => void }
 
 function initDepartureBoard() {
   departureBoardRef.value?.replaceChildren() // empties the DOM node
-  board = new DepartureBoard(departureBoardRef.value, { rowCount: 1, letterCount: letterCount.value })
-  board.setValue('wendy & reto at')
+  board = new DepartureBoard(departureBoardRef.value, { rowCount: 2, letterCount: letterCount.value })
+  board.setValue(['wendy & reto at'])
   setTimeout(() => {
     isInitialized = true
-    updateDepartureBoard()
-  }, 5000)
+    board.setValue(['we    - re  .at/', currentlyVisibleTitle.value])
+  }, 6000)
 }
 
 function updateDepartureBoard() {
   if (isInitialized) {
     departureBoardRef.value?.replaceChildren() // empties the DOM node
-    board = new DepartureBoard(departureBoardRef.value, { rowCount: 1, letterCount: letterCount.value })
-    board.setValue(`we-re.at/${currentlyVisibleTitle.value}`)
+    board = new DepartureBoard(departureBoardRef.value, { rowCount: 2, letterCount: letterCount.value })
+    board.setValue(['we-re.at/', currentlyVisibleTitle.value])
   }
 }
 
 onMounted(initDepartureBoard)
 watch(width, updateDepartureBoard)
 watch(currentlyVisibleTitle, () => {
-  board.setValue(`we-re.at/${currentlyVisibleTitle.value}`)
+  if (isInitialized) {
+    board.setValue(['we-re.at/', currentlyVisibleTitle.value])
+  }
 })
 </script>
 
