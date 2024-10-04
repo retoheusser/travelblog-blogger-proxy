@@ -10,14 +10,14 @@ const postUrlHttps = computed(() => {
 })
 const images = computed(() => parseImages(props.value.content))
 const paragraphs = computed(() => parseParagraphs(props.value.content))
-const visibleParagrahps = computed(() => textExpanded.value ? paragraphs.value : paragraphs.value.slice(0, 2))
+const visibleParagrahps = computed(() => textExpanded.value ? paragraphs.value : paragraphs.value.slice(0, 1))
 const published = computed(() => new Date(props.value.published).toLocaleDateString())
 
 const { width: windowWidth } = useWindowSize()
 </script>
 
 <template>
-  <v-sheet class="my-8 pa-0">
+  <v-sheet class="my-4 pa-0">
     <div class="px-4 mb-4 d-flex align-center justify-space-between">
       <div
         class="font-weight-bold d-flex align-start"
@@ -62,7 +62,7 @@ const { width: windowWidth } = useWindowSize()
         </p>
       </div>
     </div>
-    <v-lazy>
+    <v-lazy v-if="textExpanded || paragraphs <= visibleParagrahps">
       <!-- invisibly loading the real blogpost page counts as a view on Blogger -->
       <iframe
         class="d-none"
