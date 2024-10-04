@@ -2,6 +2,9 @@
 import type { BlogPostItem } from '../types/blogger.types'
 
 const props = defineProps<{ value: BlogPostItem }>()
+const intersectStore = useIntersectStore()
+const { width: windowWidth } = useWindowSize()
+
 const textExpanded = ref(false)
 const postUrlHttps = computed(() => {
   const url = new URL(props.value.url)
@@ -13,7 +16,11 @@ const paragraphs = computed(() => parseParagraphs(props.value.content))
 const visibleParagrahps = computed(() => textExpanded.value ? paragraphs.value : paragraphs.value.slice(0, 1))
 const published = computed(() => new Date(props.value.published).toLocaleDateString())
 
-const { width: windowWidth } = useWindowSize()
+function onIntersect(isIntersecting: boolean) {
+  if (isIntersecting) {
+    intersectStore.currentlyVisibleTitle = props.value.title
+  }
+}
 </script>
 
 <template>
@@ -47,6 +54,7 @@ const { width: windowWidth } = useWindowSize()
         />
       </v-carousel>
     </div>
+    <div v-intersect="onIntersect" />
     <div class="ml-7">
       <div class="border-left pa-4 text-body-2 text-justify">
         <p
