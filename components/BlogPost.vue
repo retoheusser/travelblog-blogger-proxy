@@ -36,6 +36,7 @@ const { width: windowWidth } = useWindowSize()
     <v-carousel
       show-arrows="hover"
       :height="windowWidth < 500 ? windowWidth : 500"
+      hide-delimiter-background
     >
       <v-carousel-item
         v-for="image in images"

@@ -5,7 +5,6 @@
     <v-app-bar
       :elevation="0"
       scroll-behavior="elevate"
-      color="primary"
     >
       <template #title>
         <span>Wendy & Reto's <span class="font-weight-bold">travel blawg</span></span>
