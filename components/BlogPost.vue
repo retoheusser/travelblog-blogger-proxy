@@ -46,7 +46,7 @@ const { width: windowWidth } = useWindowSize()
       />
     </v-carousel>
     <div class="ml-7">
-      <div class="border-left pa-4 text-body-2">
+      <div class="border-left pa-4 text-body-2 text-justify">
         <p
           v-for="(p, i) in visibleParagrahps"
           :key="i"
