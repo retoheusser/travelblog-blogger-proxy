@@ -33,18 +33,20 @@ const { width: windowWidth } = useWindowSize()
         {{ published }}
       </div>
     </div>
-    <v-carousel
-      show-arrows="hover"
-      :height="windowWidth < 500 ? windowWidth : 500"
-      hide-delimiter-background
-    >
-      <v-carousel-item
-        v-for="image in images"
-        :key="image"
-        cover
-        :src="image"
-      />
-    </v-carousel>
+    <div class="bg-primary">
+      <v-carousel
+        show-arrows="hover"
+        :height="windowWidth < 500 ? windowWidth : 500"
+        hide-delimiter-background
+      >
+        <v-carousel-item
+          v-for="image in images"
+          :key="image"
+          cover
+          :src="image"
+        />
+      </v-carousel>
+    </div>
     <div class="ml-7">
       <div class="border-left pa-4 text-body-2 text-justify">
         <p
