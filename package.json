@@ -21,6 +21,8 @@
     "vuetify-nuxt-module": "^0.18.2"
   },
   "devDependencies": {
+    "@vueuse/core": "^11.1.0",
+    "@vueuse/nuxt": "^11.1.0",
     "firebase-functions": "^6.0.1",
     "typescript": "^5.6.2",
     "vite-plugin-eslint2": "^4.4.1",

@@ -12,7 +12,7 @@
       </template>
     </v-app-bar>
     <v-main>
-      <v-container>
+      <v-container class="px-0">
         <slot />
       </v-container>
     </v-main>

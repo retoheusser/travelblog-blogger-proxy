@@ -8,7 +8,7 @@ export default defineVuetifyConfiguration({
     themes: {
       blog: {
         colors: {
-          primary: '#f6d7b0',
+          primary: '#37503D',
         },
       },
     },

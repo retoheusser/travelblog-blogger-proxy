@@ -2,29 +2,66 @@
 import type { BlogPostItem } from '../types/blogger.types'
 
 const props = defineProps<{ value: BlogPostItem }>()
+const textExpanded = ref(false)
 const postUrlHttps = computed(() => {
   const url = new URL(props.value.url)
   url.protocol = 'https:'
   return url.toString()
 })
-defineEmits<{
-  (e: 'click', event: MouseEvent): void
-}>()
+const images = computed(() => parseImages(props.value.content))
+const paragraphs = computed(() => parseParagraphs(props.value.content))
+const visibleParagrahps = computed(() => textExpanded.value ? paragraphs.value : paragraphs.value.slice(0, 2))
+const published = computed(() => new Date(props.value.published).toLocaleDateString())
+
+const { width: windowWidth } = useWindowSize()
 </script>
 
 <template>
-  <!-- eslint-disable vue/no-v-html -->
-  <v-sheet
-    color="amber-lighten-5"
-    class="my-8 pa-4"
-  >
-    <div class="text-h5 font-weight-bold mb-4">
-      {{ props.value.title }}
+  <v-sheet class="my-8 pa-0">
+    <div class="px-4 mb-4 d-flex align-center justify-space-between">
+      <div
+        class="font-weight-bold d-flex align-start"
+        style="position:relative"
+      >
+        <v-icon color="primary">
+          mdi-map-marker
+        </v-icon>
+        <div class="marker-extension" />
+        <span>{{ props.value.title }}</span>
+      </div>
+      <div class="text-body-2 text-medium-emphasis">
+        {{ published }}
+      </div>
     </div>
-    <div
-      @click="e => $emit('click', e)"
-      v-html="props.value.content"
-    />
+    <v-carousel
+      show-arrows="hover"
+      :height="windowWidth < 500 ? windowWidth : 500"
+    >
+      <v-carousel-item
+        v-for="image in images"
+        :key="image"
+        cover
+        :src="image"
+      />
+    </v-carousel>
+    <div class="ml-7">
+      <div class="border-left pa-4 text-body-2">
+        <p
+          v-for="(p, i) in visibleParagrahps"
+          :key="i"
+          class="mb-4"
+        >
+          {{ p }}
+        </p>
+        <p
+          v-if="!textExpanded && paragraphs > visibleParagrahps"
+          class="font-italic cursor-pointer"
+          @click="textExpanded = true"
+        >
+          weiterlesen
+        </p>
+      </div>
+    </div>
     <v-lazy>
       <!-- invisibly loading the real blogpost page counts as a view on Blogger -->
       <iframe
@@ -34,3 +71,18 @@ defineEmits<{
     </v-lazy>
   </v-sheet>
 </template>
+
+<style lang="css" scoped>
+.marker-extension {
+  position: absolute;
+  height: 200px;
+  top: 21px;
+  width: 1px;
+  left: 12px;
+  background-color: #37503D;
+}
+
+.border-left {
+  border-left: solid 1px #37503D;
+}
+</style>

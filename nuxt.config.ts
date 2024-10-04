@@ -2,7 +2,7 @@
 export default defineNuxtConfig({
   compatibilityDate: '2024-04-03',
   devtools: { enabled: true },
-  modules: ['@nuxt/eslint', 'vuetify-nuxt-module'],
+  modules: ['@nuxt/eslint', 'vuetify-nuxt-module', '@vueuse/nuxt'],
   eslint: {
     config: {
       stylistic: true,
