@@ -6,9 +6,9 @@
       :elevation="0"
       scroll-behavior="elevate"
     >
-      <template #title>
-        <span>Wendy & Reto's <span class="font-weight-bold">travel blawg</span></span>
-      </template>
+      <div class="board-wrapper d-flex justify-center align-center bg-primary">
+        <DepartureBoard />
+      </div>
     </v-app-bar>
     <v-main>
       <v-container class="px-0">
@@ -17,3 +17,10 @@
     </v-main>
   </v-app>
 </template>
+
+<style lang="css" scoped>
+.board-wrapper {
+  width: 100%;
+  height: 100%;
+}
+</style>

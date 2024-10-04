@@ -32,7 +32,7 @@ export default defineNuxtConfig({
       ],
     },
   },
-  css: ['./font.css'],
+  css: ['./font.css', './lib/departure-board/departure-board.css'],
   nitro: {
     firebase: {
       gen: 2,

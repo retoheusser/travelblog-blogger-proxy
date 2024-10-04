@@ -18,6 +18,5 @@ export function parseParagraphs(htmlContent: string) {
       texts.push(text)
     }
   })
-  console.log(texts)
   return texts
 }
