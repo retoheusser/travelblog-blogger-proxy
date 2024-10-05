@@ -5,6 +5,7 @@ const posts = computed(() => data.value?.items)
 
 <template>
   <ClientOnly>
+    <InstallPrompt />
     <BlogPost
       v-for="post in posts"
       :key="post.id"

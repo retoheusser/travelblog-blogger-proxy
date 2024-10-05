@@ -56,7 +56,7 @@ function onIntersect(isIntersecting: boolean) {
     </div>
     <div v-intersect="onIntersect" />
     <div class="ml-7">
-      <div class="border-left pa-4 text-body-2 text-justify">
+      <div class="border-left pa-4 text-body-2">
         <p
           v-for="(p, i) in visibleParagrahps"
           :key="i"
