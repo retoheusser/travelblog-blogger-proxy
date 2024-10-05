@@ -7,6 +7,9 @@
       scroll-behavior="elevate"
     >
       <div class="board-wrapper d-flex justify-center align-center bg-primary">
+        <v-icon style="font-size: 64px;">
+          mdi-airplane-takeoff
+        </v-icon>
         <DepartureBoard />
       </div>
     </v-app-bar>

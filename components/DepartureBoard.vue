@@ -3,7 +3,7 @@ import DepartureBoard from '../lib/departure-board/departure-board.js'
 
 const { width } = useWindowSize()
 const { currentlyVisibleTitle } = storeToRefs(useIntersectStore())
-const letterCount = computed(() => Math.min(Math.round(width.value / 22), 24))
+const letterCount = computed(() => Math.min(Math.round(width.value / 26), 24))
 const departureBoardRef = ref<HTMLDivElement | null>(null)
 let isInitialized = false
 let board: { setValue: (content: string | string[]) => void }
