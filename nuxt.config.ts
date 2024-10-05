@@ -29,6 +29,13 @@ export default defineNuxtConfig({
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com', crossorigin: undefined },
         { rel: 'stylesheet', href: 'https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap', crossorigin: undefined },
+        { rel: 'apple-touch-icon', href: '/apple-touch-icon.png', sizes: '180x180' },
+        { rel: 'icon', href: '/favicon-32x32.png', sizes: '32x32' },
+        { rel: 'icon', href: '/favicon-16x16.png', sizes: '16x16' },
+        { rel: 'manifest', href: '/site.webmanifest' },
+      ],
+      meta: [
+        { name: 'theme-color', content: '#37503D' },
       ],
     },
   },
