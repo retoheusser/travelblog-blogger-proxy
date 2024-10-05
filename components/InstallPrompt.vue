@@ -33,6 +33,9 @@ async function install() {
       variant="outlined"
       @click="install"
     >
+      <v-icon class="mr-2">
+        mdi-download
+      </v-icon>
       Installieren
     </v-btn>
   </section>
