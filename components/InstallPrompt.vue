@@ -23,7 +23,7 @@ async function install() {
 
 <template>
   <section
-    v-if="!isInstallable"
+    v-if="isInstallable"
     class="mx-4 mb-4 d-flex align-center justify-space-between"
   >
     <p class="text-body-2">
