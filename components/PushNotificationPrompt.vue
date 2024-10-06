@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { $fetch } from 'ofetch'
 import { logEvent } from 'firebase/analytics'
 import { getToken } from 'firebase/messaging'
 import { firebaseMessaging } from '~/utils/firebase'
@@ -19,6 +20,9 @@ async function subscribe(value: unknown) {
         const currentToken = await getToken(firebaseMessaging, { vapidKey })
         if (currentToken) {
           console.log('currentToken', currentToken)
+          await $fetch('/api/messaging/blogpost/subscription', { method: 'POST', body: {
+            token: currentToken,
+          } })
         }
       }
       else {
