@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { logEvent } from 'firebase/analytics'
 import type { BlogPostItem } from '../types/blogger.types'
 
 const props = defineProps<{ value: BlogPostItem }>()
@@ -18,6 +19,7 @@ const published = computed(() => new Date(props.value.published).toLocaleDateStr
 
 function onIntersect(isIntersecting: boolean) {
   if (isIntersecting) {
+    logEvent(firebaseAnalytics, 'view_post', { post_id: props.value.id })
     intersectStore.currentlyVisibleTitle = props.value.title
   }
 }

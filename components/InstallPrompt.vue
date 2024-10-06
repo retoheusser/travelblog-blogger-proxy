@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import { logEvent } from 'firebase/analytics'
+
 const isInstallable = ref(false)
 
 type BeforeInstallPromptEvent = Event & {
@@ -15,7 +17,8 @@ useEventListener(window, 'beforeinstallprompt', (e: BeforeInstallPromptEvent) =>
 async function install() {
   const outcome = (await event?.prompt())?.outcome
   event = null
-  if (outcome === 'accepted' || outcome === 'dismissed') {
+  if (outcome === 'accepted') {
+    logEvent(firebaseAnalytics, 'install_pwa')
     isInstallable.value = false
   }
 }

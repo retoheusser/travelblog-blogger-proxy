@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { logEvent } from 'firebase/analytics'
 import { getToken } from 'firebase/messaging'
 import { firebaseMessaging } from '~/utils/firebase'
 
@@ -14,6 +15,7 @@ async function subscribe(value: unknown) {
       const permission = await Notification.requestPermission()
       if (permission === 'granted') {
         console.log('notification permission granted')
+        logEvent(firebaseAnalytics, 'grant_push_notifications')
         const currentToken = await getToken(firebaseMessaging, { vapidKey })
         if (currentToken) {
           console.log('currentToken', currentToken)
