@@ -6,3 +6,13 @@ importScripts('/__/firebase/10.14.0/firebase-messaging-compat.js');
 importScripts('/__/firebase/init.js');
 
 const messaging = firebase.messaging();
+
+messaging.onBackgroundMessage(function(payload) {
+  console.log('[firebase-messaging-sw.js] Received background message ', payload);
+
+  self.registration.showNotification(payload.notification.title, {
+    body: payload.notification?.body,
+    icon: '/android-chrome-192x192.png',
+    image: payload.notification?.image
+  });
+});
