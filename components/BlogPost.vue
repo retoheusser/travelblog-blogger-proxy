@@ -42,6 +42,11 @@ function onIntersect(isIntersecting: boolean) {
         </v-icon>
         <div class="marker-extension" />
         <span>{{ props.value.title }}</span>
+        <NotificationDispatcher
+          :title="props.value.title"
+          :paragraphs="paragraphs"
+          :images="images"
+        />
       </div>
       <div class="text-body-2 text-medium-emphasis">
         {{ published }}
