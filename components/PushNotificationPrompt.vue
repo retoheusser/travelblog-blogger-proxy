@@ -2,6 +2,8 @@
 import { getToken } from 'firebase/messaging'
 import { firebaseMessaging } from '~/utils/firebase'
 
+const { public: { firebase: { vapidKey } } } = useRuntimeConfig()
+
 const isSupported = computed(() => window.Notification && window.PushManager)
 const isGranted = computed(() => window.Notification.permission === 'granted')
 
@@ -12,7 +14,7 @@ async function subscribe(value: unknown) {
       const permission = await Notification.requestPermission()
       if (permission === 'granted') {
         console.log('notification permission granted')
-        const currentToken = await getToken(firebaseMessaging, { vapidKey: 'BECJIm9x3Jpwj4xoRmBOi4DsUlic0zgTG1NfGwV4NhPsYH7qrWOmg2XimZX3AKyEf6IgFzu7cQaT7lYIyO8c0ng' })
+        const currentToken = await getToken(firebaseMessaging, { vapidKey })
         if (currentToken) {
           console.log('currentToken', currentToken)
         }

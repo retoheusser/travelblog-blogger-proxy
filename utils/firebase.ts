@@ -7,15 +7,7 @@ import { getMessaging } from 'firebase/messaging'
 
 // Your web app's Firebase configuration
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-const firebaseConfig = {
-  apiKey: 'AIzaSyAu-R4Z01V24_iztTjv4ZTXYcu388orQP0',
-  authDomain: 'wendy-reto-travelblog.firebaseapp.com',
-  projectId: 'wendy-reto-travelblog',
-  storageBucket: 'wendy-reto-travelblog.appspot.com',
-  messagingSenderId: '1038170436258',
-  appId: '1:1038170436258:web:58e644b6e5d21d66f2ddfb',
-  measurementId: 'G-GJYCJ2SBH0',
-}
+const { public: { firebase: { vapidKey, ...firebaseConfig } } } = useRuntimeConfig()
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig)

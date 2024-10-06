@@ -22,6 +22,18 @@ export default defineNuxtConfig({
       apiKey: '',
       blogId: '',
     },
+    public: {
+      firebase: {
+        apiKey: '',
+        authDomain: '',
+        projectId: '',
+        storageBucket: '',
+        messagingSenderId: '',
+        appId: '',
+        measurementId: '',
+        vapidKey: '',
+      },
+    },
   },
   app: {
     head: {
