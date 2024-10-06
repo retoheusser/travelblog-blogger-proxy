@@ -30,7 +30,7 @@ async function subscribe(value: unknown) {
 
 <template>
   <section
-    v-if="isSupported && isGranted"
+    v-if="isSupported && !isGranted"
     class="mx-4 mb-4 d-flex align-center justify-space-between"
   >
     <p class="text-body-2 d-flex">
