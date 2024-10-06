@@ -17,6 +17,11 @@ const paragraphs = computed(() => parseParagraphs(props.value.content))
 const visibleParagrahps = computed(() => textExpanded.value ? paragraphs.value : paragraphs.value.slice(0, 1))
 const published = computed(() => new Date(props.value.published).toLocaleDateString())
 
+function expand() {
+  textExpanded.value = true
+  logEvent(firebaseAnalytics, 'expand_text', { post_id: props.value.id })
+}
+
 function onIntersect(isIntersecting: boolean) {
   if (isIntersecting) {
     logEvent(firebaseAnalytics, 'view_post', { post_id: props.value.id })
@@ -69,7 +74,7 @@ function onIntersect(isIntersecting: boolean) {
         <p
           v-if="!textExpanded && paragraphs > visibleParagrahps"
           class="font-italic cursor-pointer"
-          @click="textExpanded = true"
+          @click="expand"
         >
           weiterlesen
         </p>

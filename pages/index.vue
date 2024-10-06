@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import { setUserId } from 'firebase/analytics'
 import { onAuthStateChanged, signInAnonymously } from 'firebase/auth'
 import { firebaseAuth } from '~/utils/firebase'
 
@@ -8,6 +9,7 @@ const posts = computed(() => data.value?.items)
 onAuthStateChanged(firebaseAuth, async (user) => {
   if (user) {
     console.log('user', user)
+    setUserId(firebaseAnalytics, user.uid)
   }
   else {
     try {
