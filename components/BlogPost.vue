@@ -7,6 +7,7 @@ const intersectStore = useIntersectStore()
 const { width: windowWidth } = useWindowSize()
 
 const textExpanded = ref(false)
+const carouselIndex = ref(0)
 
 const postUrlHttps = computed(() => {
   const url = new URL(props.value.url)
@@ -58,6 +59,7 @@ function onIntersect(isIntersecting: boolean) {
     </div>
     <div class="bg-primary">
       <v-carousel
+        v-model="carouselIndex"
         show-arrows="hover"
         :height="windowWidth < 500 ? windowWidth : 500"
         hide-delimiter-background
@@ -65,23 +67,56 @@ function onIntersect(isIntersecting: boolean) {
         <v-carousel-item
           v-for="image in images"
           :key="image.thumbnail"
-        >
-          <v-img
-            cover
-            :src="image.thumbnail"
-          />
-          <v-fab
-            absolute
-            color="primary"
-            icon="mdi-magnify-plus"
-            style="bottom: 24px; right: 24px"
-            @click="overlay = true; overlayImage=image.fullRes"
-          />
-        </v-carousel-item>
+          cover
+          :src="image.thumbnail"
+        />
       </v-carousel>
     </div>
     <div v-intersect="onIntersect" />
+    <div class="ml-7" />
     <div class="ml-7">
+      <div class="border-left px-4 pt-4 d-flex justify-end">
+        <v-tooltip
+          location="top"
+          text="Find ich gut"
+        >
+          <template #activator="{ props: tooltipProps }">
+            <v-btn
+              size="small"
+              icon="mdi-heart"
+              variant="text"
+              v-bind="tooltipProps"
+            />
+          </template>
+        </v-tooltip>
+        <v-tooltip
+          location="top"
+          text="Senf dazugeben"
+        >
+          <template #activator="{ props: tooltipProps }">
+            <v-btn
+              size="small"
+              icon="mdi-comment"
+              variant="text"
+              v-bind="tooltipProps"
+            />
+          </template>
+        </v-tooltip>
+        <v-tooltip
+          location="top"
+          text="Aktuelles Bild vergrössern"
+        >
+          <template #activator="{ props: tooltipProps }">
+            <v-btn
+              size="small"
+              icon="mdi-magnify-plus"
+              variant="text"
+              v-bind="tooltipProps"
+              @click="overlay = true; overlayImage = images.at(carouselIndex)?.fullRes"
+            />
+          </template>
+        </v-tooltip>
+      </div>
       <div class="border-left pa-4 text-body-2">
         <p
           v-for="(p, i) in visibleParagrahps"
