@@ -1,7 +1,8 @@
 <script lang="ts" setup>
 import { $fetch } from 'ofetch'
+import type { ImagePreview } from '~/utils/htmlParser'
 
-const props = defineProps<{ title: string, paragraphs: string[], images: string[] }>()
+const props = defineProps<{ title: string, paragraphs: string[], images: ImagePreview[] }>()
 const route = useRoute()
 
 const showNotificationDispatcher = computed(() => route.query.action === 'notification')
@@ -17,7 +18,7 @@ async function send() {
       body: {
         title: props.title,
         body: props.paragraphs[0],
-        imageUrl: props.images[0],
+        imageUrl: props.images[0].thumbnail,
       },
     })
     sent.value = true

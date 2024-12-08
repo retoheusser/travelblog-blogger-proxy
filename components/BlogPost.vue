@@ -7,6 +7,7 @@ const intersectStore = useIntersectStore()
 const { width: windowWidth } = useWindowSize()
 
 const textExpanded = ref(false)
+
 const postUrlHttps = computed(() => {
   const url = new URL(props.value.url)
   url.protocol = 'https:'
@@ -16,6 +17,9 @@ const images = computed(() => parseImages(props.value.content))
 const paragraphs = computed(() => parseParagraphs(props.value.content))
 const visibleParagrahps = computed(() => textExpanded.value ? paragraphs.value : paragraphs.value.slice(0, 1))
 const published = computed(() => new Date(props.value.published).toLocaleDateString())
+
+const overlay = ref(false)
+const overlayImage = ref<string | undefined>(undefined)
 
 function expand() {
   textExpanded.value = true
@@ -60,10 +64,20 @@ function onIntersect(isIntersecting: boolean) {
       >
         <v-carousel-item
           v-for="image in images"
-          :key="image"
-          cover
-          :src="image"
-        />
+          :key="image.thumbnail"
+        >
+          <v-img
+            cover
+            :src="image.thumbnail"
+          />
+          <v-fab
+            absolute
+            color="primary"
+            icon="mdi-magnify-plus"
+            style="bottom: 24px; right: 24px"
+            @click="overlay = true; overlayImage=image.fullRes"
+          />
+        </v-carousel-item>
       </v-carousel>
     </div>
     <div v-intersect="onIntersect" />
@@ -92,6 +106,15 @@ function onIntersect(isIntersecting: boolean) {
         :src="postUrlHttps"
       />
     </v-lazy>
+    <v-dialog v-model="overlay">
+      <v-sheet>
+        <v-img
+          :src="overlayImage"
+          cover
+          @click="overlay = false"
+        />
+      </v-sheet>
+    </v-dialog>
   </v-sheet>
 </template>
 

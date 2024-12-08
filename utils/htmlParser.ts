@@ -1,11 +1,21 @@
+export interface ImagePreview {
+  thumbnail?: string
+  fullRes?: string
+}
+
 export function parseImages(htmlContent: string) {
   const parser = new DOMParser()
   const doc = parser.parseFromString(htmlContent, 'text/html')
-  const imageSources: string[] = []
+  const imageSources: ImagePreview[] = []
   doc.querySelectorAll('img').forEach((el) => {
-    imageSources.push(el.src)
+    const thumbnail = el.src
+    const fullRes = el.closest('a')?.href
+    imageSources.push({
+      thumbnail,
+      fullRes,
+    })
   })
-  return imageSources.filter(i => !!i)
+  return imageSources.filter(i => !!i.thumbnail)
 }
 
 export function parseParagraphs(htmlContent: string) {
