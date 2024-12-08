@@ -15,7 +15,7 @@ function initDepartureBoard() {
   setTimeout(() => {
     isInitialized = true
     board.setValue(['we    - re  .at/', currentlyVisibleTitle.value])
-  }, 6000)
+  }, 3000)
 }
 
 function updateDepartureBoard() {
