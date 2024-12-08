@@ -18,6 +18,7 @@ const images = computed(() => parseImages(props.value.content))
 const paragraphs = computed(() => parseParagraphs(props.value.content))
 const visibleParagrahps = computed(() => textExpanded.value ? paragraphs.value : paragraphs.value.slice(0, 1))
 const published = computed(() => new Date(props.value.published).toLocaleDateString())
+const dayNumber = computed(() => Math.ceil((new Date(props.value.published).valueOf() - new Date('2025-01-01T00:00:00.000Z').valueOf()) / 1000 / 60 / 60 / 24))
 
 const overlay = ref(false)
 const overlayImage = ref<string | undefined>(undefined)
@@ -54,7 +55,7 @@ function onIntersect(isIntersecting: boolean) {
         />
       </div>
       <div class="text-body-2 text-medium-emphasis">
-        {{ published }}
+        Tag {{ dayNumber }} ({{ published }})
       </div>
     </div>
     <div class="bg-primary">
