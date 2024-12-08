@@ -22,12 +22,13 @@ const { y } = useWindowScroll()
     </v-app-bar>
     <v-main>
       <v-container class="pa-0">
-        <v-row class="d-flex justify-center">
+        <v-row class="d-flex justify-center mx-0">
           <v-col
             :cols="12"
             :sm="8"
             :lg="6"
             :xl="4"
+            class="px-0"
           >
             <slot />
           </v-col>

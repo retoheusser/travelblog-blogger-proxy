@@ -63,7 +63,7 @@ function onIntersect(isIntersecting: boolean) {
       <v-carousel
         v-model="carouselIndex"
         show-arrows="hover"
-        :height="windowWidth < 400 ? windowWidth : 400"
+        :height="windowWidth < 500 ? windowWidth : 500"
         hide-delimiter-background
       >
         <v-carousel-item
