@@ -12,7 +12,7 @@ messaging.onBackgroundMessage(function(payload) {
 
   self.registration.showNotification(payload.notification.title, {
     body: payload.notification?.body,
-    icon: '/android-chrome-192x192.png',
+    icon: '/android-chrome-192x192-mono.png',
     image: payload.notification?.image
   });
 });
