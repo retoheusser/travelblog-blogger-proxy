@@ -63,7 +63,7 @@ function onIntersect(isIntersecting: boolean) {
       <v-carousel
         v-model="carouselIndex"
         show-arrows="hover"
-        :height="windowWidth < 500 ? windowWidth : 500"
+        :height="windowWidth < 400 ? windowWidth : 400"
         hide-delimiter-background
       >
         <v-carousel-item
@@ -147,6 +147,10 @@ function onIntersect(isIntersecting: boolean) {
       :visible="overlay"
       :imgs="overlayImages"
       :index="carouselIndex"
+      :loop="true"
+      :move-disabled="true"
+      :rotate-disabled="true"
+      :zoom-scale="1"
       @hide="overlay = false"
     />
   </v-sheet>
