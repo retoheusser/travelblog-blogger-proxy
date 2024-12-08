@@ -10,6 +10,11 @@ export default eventHandler(async (event) => {
       body,
       imageUrl: imageUrl,
     },
+    webpush: {
+      fcmOptions: {
+        link: 'https://we-re.at',
+      },
+    },
   })
 
   console.log('Successfully sent message:', response)
