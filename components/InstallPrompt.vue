@@ -27,7 +27,7 @@ async function install() {
 <template>
   <section
     v-if="isInstallable"
-    class="mx-4 mb-4 d-flex align-center justify-space-between"
+    class="px-4 py-8 mb-4 d-flex align-center justify-space-between bg-grey-lighten-2"
   >
     <p class="text-body-2">
       Installiere diesen Reiseblog als App auf deinem Gerät, um die Reise möglichst bequem mitzuverfolgen.

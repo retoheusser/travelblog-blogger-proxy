@@ -53,7 +53,7 @@ onMounted(() => {
 <template>
   <section
     v-if="isSupported && !isGranted && !isDenied"
-    class="mx-4 mb-4 d-flex align-center justify-space-between"
+    class="px-4 py-8 d-flex align-center justify-space-between bg-grey-lighten-2"
   >
     <p class="text-body-2 d-flex">
       <v-icon class="mr-2">

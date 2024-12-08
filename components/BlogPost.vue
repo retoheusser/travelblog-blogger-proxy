@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 import { logEvent } from 'firebase/analytics'
+import VueEasyLightbox from 'vue-easy-lightbox'
 import type { BlogPostItem } from '../types/blogger.types'
 
 const props = defineProps<{ value: BlogPostItem }>()
@@ -21,7 +22,7 @@ const published = computed(() => new Date(props.value.published).toLocaleDateStr
 const dayNumber = computed(() => Math.ceil((new Date(props.value.published).valueOf() - new Date('2025-01-01T00:00:00.000Z').valueOf()) / 1000 / 60 / 60 / 24))
 
 const overlay = ref(false)
-const overlayImage = ref<string | undefined>(undefined)
+const overlayImages = computed(() => images.value.map(({ fullRes }) => fullRes!))
 
 function expand() {
   textExpanded.value = true
@@ -113,7 +114,7 @@ function onIntersect(isIntersecting: boolean) {
               icon="mdi-magnify-plus"
               variant="text"
               v-bind="tooltipProps"
-              @click="overlay = true; overlayImage = images.at(carouselIndex)?.fullRes"
+              @click="overlay = true"
             />
           </template>
         </v-tooltip>
@@ -142,15 +143,12 @@ function onIntersect(isIntersecting: boolean) {
         :src="postUrlHttps"
       />
     </v-lazy>
-    <v-dialog v-model="overlay">
-      <v-sheet>
-        <v-img
-          :src="overlayImage"
-          cover
-          @click="overlay = false"
-        />
-      </v-sheet>
-    </v-dialog>
+    <VueEasyLightbox
+      :visible="overlay"
+      :imgs="overlayImages"
+      :index="carouselIndex"
+      @hide="overlay = false"
+    />
   </v-sheet>
 </template>
 
