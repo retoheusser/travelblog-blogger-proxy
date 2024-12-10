@@ -148,7 +148,6 @@ function onIntersect(isIntersecting: boolean) {
       :imgs="overlayImages"
       :index="carouselIndex"
       :loop="true"
-      :move-disabled="true"
       :rotate-disabled="true"
       :zoom-scale="1"
       @hide="overlay = false"
