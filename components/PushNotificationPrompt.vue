@@ -6,6 +6,7 @@ import { firebaseMessaging } from '~/utils/firebase'
 
 const { public: { firebase: { vapidKey } } } = useRuntimeConfig()
 const subscribed = ref(false)
+const isSubscribedCookie = useCookie('isSubscribedToWebPush', { path: '/', maxAge: 60 * 60 * 24 * 7 })
 
 const isSupported = computed(() => window.Notification && window.PushManager)
 const isGranted = computed(() => window.Notification.permission === 'granted')
@@ -40,11 +41,12 @@ async function getAndStoreToken() {
     await $fetch('/api/messaging/blogpost/subscription', { method: 'POST', body: {
       token: currentToken,
     } })
+    isSubscribedCookie.value = '1'
   }
 }
 
 onMounted(() => {
-  if (isGranted.value) {
+  if (isGranted.value && !isSubscribedCookie.value) {
     getAndStoreToken()
   }
 })
