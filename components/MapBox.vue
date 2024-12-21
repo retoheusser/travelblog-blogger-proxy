@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import 'mapbox-gl/dist/mapbox-gl.css'
-import type { Map } from 'mapbox-gl'
 import mapboxgl from 'mapbox-gl'
 import type { BlogPostLocation } from '~/types/blogger.types'
 
@@ -17,6 +16,7 @@ watch(coordinatesTuples, (coords) => {
     style: 'mapbox://styles/mapbox/light-v11',
     center: props.coordinates.at(1),
     zoom: 8,
+    cooperativeGestures: true,
   })
 
   map.on('load', () => {
