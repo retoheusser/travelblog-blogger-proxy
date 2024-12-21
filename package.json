@@ -21,6 +21,7 @@
     "firebase": "^10.14.0",
     "firebase-admin": "^12.6.0",
     "nuxt": "^3.13.0",
+    "ua-parser-js": "^2.0.0",
     "vue": "latest",
     "vue-easy-lightbox": "^1.19.0",
     "vue-router": "latest",

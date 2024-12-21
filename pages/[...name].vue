@@ -32,6 +32,7 @@ onAuthStateChanged(firebaseAuth, async (user) => {
       :key="post.id"
       :value="post"
     />
+    <IOSPrompt />
     <PushNotificationPrompt />
     <BlogPost
       v-for="post in otherPosts"
