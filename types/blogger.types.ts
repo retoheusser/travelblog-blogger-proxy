@@ -4,6 +4,13 @@ export interface BlogOverview {
   etag: string
 }
 
+export interface BlogPostLocation {
+  name: string
+  lat: number
+  lng: number
+  span: string
+}
+
 export interface BlogPostItem {
   kind: string
   id: string
@@ -17,12 +24,7 @@ export interface BlogPostItem {
   author: Author
   replies: Replies
   etag: string
-  location?: {
-    name: string
-    lat: number
-    lng: number
-    span: string
-  }
+  location?: BlogPostLocation
 }
 
 export interface Blog {

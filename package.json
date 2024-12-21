@@ -20,6 +20,7 @@
     "@pinia/nuxt": "^0.5.5",
     "firebase": "^10.14.0",
     "firebase-admin": "^12.6.0",
+    "mapbox-gl": "^3.9.0",
     "nuxt": "^3.13.0",
     "ua-parser-js": "^2.0.0",
     "vue": "latest",

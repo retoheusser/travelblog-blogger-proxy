@@ -5,6 +5,7 @@ import { firebaseAuth } from '~/utils/firebase'
 
 const { data } = useFetch('/api/posts')
 const posts = computed(() => data.value?.items)
+const coordinates = computed(() => posts.value?.map(({ location }) => location).filter(location => !!location) || [])
 const firstPosts = computed(() => posts.value?.slice(0, 1) ?? [])
 const otherPosts = computed(() => posts.value?.slice(1) ?? [])
 
@@ -27,6 +28,7 @@ onAuthStateChanged(firebaseAuth, async (user) => {
 <template>
   <ClientOnly>
     <InstallPrompt />
+    <MapBox :coordinates="coordinates" />
     <BlogPost
       v-for="post in firstPosts"
       :key="post.id"
