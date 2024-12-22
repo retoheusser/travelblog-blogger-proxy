@@ -15,7 +15,7 @@ watch(coordinatesTuples, (coords) => {
     container: mapElement.value!,
     style: 'mapbox://styles/mapbox/light-v11',
     center: props.coordinates.at(1),
-    zoom: 8,
+    zoom: 7,
     cooperativeGestures: true,
   })
 
