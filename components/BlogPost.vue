@@ -78,19 +78,7 @@ function onIntersect(isIntersecting: boolean) {
     <div class="ml-7" />
     <div class="ml-7">
       <div class="border-left px-4 pt-4 d-flex justify-end">
-        <v-tooltip
-          location="top"
-          text="Find ich gut"
-        >
-          <template #activator="{ props: tooltipProps }">
-            <v-btn
-              size="small"
-              icon="mdi-heart"
-              variant="text"
-              v-bind="tooltipProps"
-            />
-          </template>
-        </v-tooltip>
+        <LikeBtn :post-id="value.id" />
         <v-tooltip
           location="top"
           text="Senf dazugeben"
