@@ -1,6 +1,7 @@
 <script lang="ts" setup>
 import { onAuthStateChanged } from 'firebase/auth'
 import { collection, onSnapshot, setDoc, doc, deleteDoc } from 'firebase/firestore'
+import { logEvent } from 'firebase/analytics'
 
 const props = defineProps<{ postId: string }>()
 
@@ -28,9 +29,11 @@ async function toggleLike() {
     await setDoc(doc(firestoreDb, 'posts', props.postId, 'likes', userId.value), {
       liked: true,
     })
+    logEvent(firebaseAnalytics, 'like_post', { post_id: props.postId })
   }
   else {
     await deleteDoc(doc(firestoreDb, 'posts', props.postId, 'likes', userId.value))
+    logEvent(firebaseAnalytics, 'unlike_post', { post_id: props.postId })
   }
 }
 
