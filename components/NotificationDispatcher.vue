@@ -30,17 +30,21 @@ async function send() {
 </script>
 
 <template>
-  <v-btn
+  <v-tooltip
     v-if="showNotificationDispatcher"
-    color="primary"
-    class="ml-2"
-    size="x-small"
-    :loading="loading"
-    :disabled="sent"
-    @click="send"
+    location="top"
+    text="Als Push verschicken"
   >
-    <v-icon class="mr-2">
-      mdi-bell
-    </v-icon>Senden
-  </v-btn>
+    <template #activator="{ props: tooltipProps }">
+      <v-btn
+        size="small"
+        icon="mdi-bell"
+        variant="text"
+        v-bind="tooltipProps"
+        :loading="loading"
+        :disabled="sent"
+        @click="send"
+      />
+    </template>
+  </v-tooltip>
 </template>

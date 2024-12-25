@@ -53,11 +53,6 @@ function onIntersect(isIntersecting: boolean) {
           :post-id="props.value.id"
           :post-published="props.value.published"
         />
-        <NotificationDispatcher
-          :title="props.value.title"
-          :paragraphs="paragraphs"
-          :images="images"
-        />
       </div>
       <div class="text-body-2 text-medium-emphasis">
         Tag {{ dayNumber }} ({{ published }})
@@ -82,6 +77,11 @@ function onIntersect(isIntersecting: boolean) {
     <div class="ml-7" />
     <div class="ml-7">
       <div class="border-left px-4 pt-4 d-flex justify-end">
+        <NotificationDispatcher
+          :title="props.value.title"
+          :paragraphs="paragraphs"
+          :images="images"
+        />
         <LikeBtn :post-id="value.id" />
         <v-tooltip
           location="top"
