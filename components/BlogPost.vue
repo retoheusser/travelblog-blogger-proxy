@@ -49,6 +49,10 @@ function onIntersect(isIntersecting: boolean) {
         </v-icon>
         <div class="marker-extension" />
         <span>{{ props.value.title }}</span>
+        <UnreadIndicator
+          :post-id="props.value.id"
+          :post-published="props.value.published"
+        />
         <NotificationDispatcher
           :title="props.value.title"
           :paragraphs="paragraphs"
@@ -122,6 +126,10 @@ function onIntersect(isIntersecting: boolean) {
         >
           weiterlesen
         </p>
+        <ReadCount
+          v-if="textExpanded || paragraphs <= visibleParagrahps"
+          :post-id="value.id"
+        />
       </div>
     </div>
     <v-lazy v-if="textExpanded || paragraphs <= visibleParagrahps">

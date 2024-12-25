@@ -9,7 +9,6 @@ const liked = ref(false)
 const likeCount = ref(0)
 const userId = ref()
 let unsubscribeLike: ReturnType<typeof onSnapshot>
-let unsubscribeLikeCount: ReturnType<typeof onSnapshot>
 
 onAuthStateChanged(firebaseAuth, async (user) => {
   userId.value = user?.uid
@@ -19,9 +18,10 @@ watch(userId, async (uid) => {
   unsubscribeLike = onSnapshot(doc(firestoreDb, 'posts', props.postId, 'likes', uid), (snapshot) => {
     liked.value = snapshot.data()?.liked
   })
-  unsubscribeLikeCount = onSnapshot(collection(firestoreDb, 'posts', props.postId, 'likes'), (snapshot) => {
-    likeCount.value = snapshot.size
-  })
+})
+
+const unsubscribeLikeCount = onSnapshot(collection(firestoreDb, 'posts', props.postId, 'likes'), (snapshot) => {
+  likeCount.value = snapshot.size
 })
 
 async function toggleLike() {
