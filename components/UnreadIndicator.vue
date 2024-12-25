@@ -32,7 +32,7 @@ onUnmounted(() => {
 <template>
   <v-chip
     v-if="isUnread"
-    size="small"
+    size="x-small"
     rounded
     class="mx-2"
     color="red"

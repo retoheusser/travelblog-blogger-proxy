@@ -41,7 +41,7 @@ function onIntersect(isIntersecting: boolean) {
   <v-sheet class="my-4 pa-0">
     <div class="px-4 mb-4 d-flex align-center justify-space-between">
       <div
-        class="font-weight-bold d-flex align-start"
+        class="font-weight-bold d-flex align-center"
         style="position:relative"
       >
         <v-icon color="primary">
