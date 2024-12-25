@@ -8,7 +8,7 @@ export function parseImages(htmlContent: string) {
   const doc = parser.parseFromString(htmlContent, 'text/html')
   const imageSources: ImagePreview[] = []
   doc.querySelectorAll('img').forEach((el) => {
-    const thumbnail = el.src
+    const thumbnail = el.src.replace('s320', 's720').replace(/(w|h)\d+-(w|h)\d+/, 's720')
     const fullRes = el.closest('a')?.href
     imageSources.push({
       thumbnail,
