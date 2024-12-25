@@ -9,6 +9,7 @@ const { width: windowWidth } = useWindowSize()
 
 const textExpanded = ref(false)
 const carouselIndex = ref(0)
+const isAddingComment = ref(false)
 
 const postUrlHttps = computed(() => {
   const url = new URL(props.value.url)
@@ -93,6 +94,7 @@ function onIntersect(isIntersecting: boolean) {
               icon="mdi-comment"
               variant="text"
               v-bind="tooltipProps"
+              @click="expand(); isAddingComment = true"
             />
           </template>
         </v-tooltip>
@@ -129,6 +131,10 @@ function onIntersect(isIntersecting: boolean) {
         <ReadCount
           v-if="textExpanded || paragraphs <= visibleParagrahps"
           :post-id="value.id"
+        />
+        <AddComment
+          v-model="isAddingComment"
+          :post-id="props.value.id"
         />
       </div>
     </div>
