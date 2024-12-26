@@ -8,12 +8,16 @@ const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void
 }>()
 
+const goTo = useGoTo()
+
 const step = ref(0)
 const comment = ref('')
 const name = ref('')
 const user = ref()
 const isLoading = ref(false)
+const { modelValue } = toRefs(props)
 const commentForm = ref<HTMLFormElement & { validate: () => Promise<{ valid: boolean }> }>()
+const commentInput = ref<HTMLInputElement>()
 const nameForm = ref<HTMLFormElement & { validate: () => Promise<{ valid: boolean }> }>()
 
 const requiredRule = (value: string) => !!value || 'Bitte gib etwas ein'
@@ -57,6 +61,16 @@ function reset() {
   step.value = 0
   comment.value = ''
 }
+
+watch(modelValue, async (isCommenting) => {
+  if (isCommenting) {
+    await nextTick()
+    goTo(commentInput.value!, {
+      duration: 500,
+      offset: -80,
+    })
+  }
+})
 </script>
 
 <template>
@@ -71,6 +85,7 @@ function reset() {
         @submit.prevent=""
       >
         <v-textarea
+          ref="commentInput"
           v-model="comment"
           density="compact"
           variant="outlined"
