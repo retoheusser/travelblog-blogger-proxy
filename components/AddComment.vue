@@ -66,7 +66,10 @@ function reset() {
     class="pt-6"
   >
     <v-tabs-window-item :value="0">
-      <v-form ref="commentForm">
+      <v-form
+        ref="commentForm"
+        @submit.prevent=""
+      >
         <v-textarea
           v-model="comment"
           density="compact"
@@ -86,6 +89,7 @@ function reset() {
       <v-form
         ref="nameForm"
         class="d-flex"
+        @submit.prevent=""
       >
         <v-text-field
           v-model="name"
@@ -97,6 +101,7 @@ function reset() {
           :rules="[requiredRule]"
           prepend-icon="mdi-arrow-left"
           @click:prepend="step = 0"
+          @keyup.enter="send"
         />
         <v-btn
           color="primary"

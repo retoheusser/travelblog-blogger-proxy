@@ -35,6 +35,6 @@ onUnmounted(() => {
     v-intersect="onIntersect"
     class="font-italic"
   >
-    {{ readCount }} mal gelesen
+    <span class="d-none">{{ readCount }} mal gelesen</span>
   </div>
 </template>

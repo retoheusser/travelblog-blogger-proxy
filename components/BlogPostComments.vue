@@ -16,7 +16,6 @@ const unsubscribe = onSnapshot(collection(firestoreDb, 'posts', props.postId, 'c
       .filter(change => change.type === 'added')
       .map(addition => ({ ...addition.doc.data() as BlogPostComment, id: addition.doc.id })),
   ]
-  console.log(comments.value)
 })
 
 onUnmounted(() => {
