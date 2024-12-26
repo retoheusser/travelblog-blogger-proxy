@@ -1,5 +1,5 @@
 <script lang="ts" setup>
-import { collection, onSnapshot } from 'firebase/firestore'
+import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
 import type { BlogPostComment } from '~/types/firestore.types'
 
 const props = defineProps<{ postId: string }>()
@@ -9,14 +9,18 @@ const emit = defineEmits<{
 
 const comments = ref<(BlogPostComment & { id: string })[]>([])
 
-const unsubscribe = onSnapshot(collection(firestoreDb, 'posts', props.postId, 'comments'), (snapshot) => {
-  comments.value = [
-    ...comments.value,
-    ...snapshot.docChanges()
-      .filter(change => change.type === 'added')
-      .map(addition => ({ ...addition.doc.data() as BlogPostComment, id: addition.doc.id })),
-  ]
-})
+const unsubscribe = onSnapshot(
+  query(
+    collection(firestoreDb, 'posts', props.postId, 'comments'), orderBy('timestamp'),
+  ),
+  (snapshot) => {
+    comments.value = [
+      ...comments.value,
+      ...snapshot.docChanges()
+        .filter(change => change.type === 'added')
+        .map(addition => ({ ...addition.doc.data() as BlogPostComment, id: addition.doc.id })),
+    ]
+  })
 
 onUnmounted(() => {
   if (unsubscribe) {
