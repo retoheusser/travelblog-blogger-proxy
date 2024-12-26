@@ -84,6 +84,7 @@ function onIntersect(isIntersecting: boolean) {
           :images="images"
         />
         <LikeBtn :post-id="value.id" />
+        <HateBtn :post-id="value.id" />
         <v-tooltip
           location="top"
           text="Senf dazugeben"
