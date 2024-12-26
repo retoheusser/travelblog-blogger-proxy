@@ -40,6 +40,7 @@ export default defineNuxtConfig({
   },
   app: {
     head: {
+      title: 'Wendy & Retos Travelblog',
       link: [
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com', crossorigin: undefined },
@@ -52,6 +53,10 @@ export default defineNuxtConfig({
       meta: [
         { name: 'theme-color', content: '#37503D' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0' },
+        { name: 'og:title', content: 'Wendy & Retos Travelblog' },
+        { name: 'og:type', content: 'website' },
+        { name: 'og:site_name', content: 'Wendy & Retos Travelblog' },
+        { name: 'og:image', content: 'og_image.jpg' },
       ],
     },
   },
