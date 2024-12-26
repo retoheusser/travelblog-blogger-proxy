@@ -1,5 +1,7 @@
 <script lang="ts" setup>
-import { onAuthStateChanged } from 'firebase/auth'
+import { logEvent } from 'firebase/analytics'
+import { onAuthStateChanged, updateProfile } from 'firebase/auth'
+import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
 
 const props = defineProps<{ postId: string, modelValue: boolean }>()
 const emit = defineEmits<{
@@ -9,13 +11,16 @@ const emit = defineEmits<{
 const step = ref(0)
 const comment = ref('')
 const name = ref('')
+const user = ref()
+const isLoading = ref(false)
 const commentForm = ref<HTMLFormElement & { validate: () => Promise<{ valid: boolean }> }>()
 const nameForm = ref<HTMLFormElement & { validate: () => Promise<{ valid: boolean }> }>()
 
 const requiredRule = (value: string) => !!value || 'Bitte gib etwas ein'
 
-onAuthStateChanged(firebaseAuth, async (user) => {
-  name.value = user?.displayName ?? ''
+onAuthStateChanged(firebaseAuth, async (u) => {
+  name.value = u?.displayName ?? ''
+  user.value = u
 })
 
 async function proceed() {
@@ -28,17 +33,29 @@ async function proceed() {
 async function send() {
   const { valid } = await nameForm.value!.validate()
   if (valid) {
-    console.log(name.value, comment.value)
+    isLoading.value = true
+    try {
+      await addDoc(collection(firestoreDb, 'posts', props.postId, 'comments'), {
+        comment: comment.value,
+        uid: user.value.uid,
+        name: name.value,
+        timestamp: serverTimestamp(),
+      })
+      await updateProfile(user.value, { displayName: name.value })
+      logEvent(firebaseAnalytics, 'comment_post', { post_id: props.postId })
 
-    emit('update:modelValue', false)
-    reset()
+      emit('update:modelValue', false)
+      reset()
+    }
+    finally {
+      isLoading.value = false
+    }
   }
 }
 
 function reset() {
   step.value = 0
   comment.value = ''
-  name.value = ''
 }
 </script>
 
@@ -83,10 +100,10 @@ function reset() {
         />
         <v-btn
           color="primary"
-          class="ml-4"
+          class="ml-4 font-weight-bold"
           @click="send"
         >
-          Senden
+          Speichern
         </v-btn>
       </v-form>
     </v-tabs-window-item>

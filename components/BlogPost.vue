@@ -121,16 +121,23 @@ function onIntersect(isIntersecting: boolean) {
         >
           {{ p }}
         </p>
-        <p
+        <v-btn
           v-if="!textExpanded && paragraphs > visibleParagrahps"
-          class="font-italic cursor-pointer"
+          size="x-small"
+          variant="tonal"
+          class="font-weight-bold"
           @click="expand"
         >
           weiterlesen
-        </p>
+        </v-btn>
         <ReadCount
           v-if="textExpanded || paragraphs <= visibleParagrahps"
           :post-id="value.id"
+        />
+        <BlogPostComments
+          v-if="textExpanded || paragraphs <= visibleParagrahps"
+          :post-id="props.value.id"
+          @click:add="expand(); isAddingComment = true"
         />
         <AddComment
           v-model="isAddingComment"
