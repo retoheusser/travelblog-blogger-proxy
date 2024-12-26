@@ -118,6 +118,7 @@ watch(modelValue, async (isCommenting) => {
           @click:prepend="step = 0"
           @keyup.enter="send"
         />
+        <HiddenFormFields />
         <v-btn
           color="primary"
           class="ml-4 font-weight-bold"
