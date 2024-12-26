@@ -1,6 +1,6 @@
 <script lang="ts" setup>
 import { setUserId } from 'firebase/analytics'
-import { onAuthStateChanged, signInAnonymously } from 'firebase/auth'
+import { onAuthStateChanged, setPersistence, signInAnonymously, browserLocalPersistence } from 'firebase/auth'
 import { firebaseAuth } from '~/utils/firebase'
 
 const { data } = useFetch('/api/posts')
@@ -16,6 +16,7 @@ onAuthStateChanged(firebaseAuth, async (user) => {
   }
   else {
     try {
+      await setPersistence(firebaseAuth, browserLocalPersistence)
       await signInAnonymously(firebaseAuth)
     }
     catch (error) {
