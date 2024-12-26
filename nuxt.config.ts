@@ -56,7 +56,7 @@ export default defineNuxtConfig({
         { name: 'og:title', content: 'Wendy & Retos Travelblog' },
         { name: 'og:type', content: 'website' },
         { name: 'og:site_name', content: 'Wendy & Retos Travelblog' },
-        { name: 'og:image', content: 'og_image.jpg' },
+        { name: 'og:image', content: 'https://we-re.at/og_image.jpg' },
       ],
     },
   },
