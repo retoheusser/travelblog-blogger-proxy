@@ -2,15 +2,22 @@
 import { $fetch } from 'ofetch'
 import { logEvent } from 'firebase/analytics'
 import { getToken } from 'firebase/messaging'
+import { onAuthStateChanged } from 'firebase/auth'
+import { doc, updateDoc } from 'firebase/firestore'
 import { firebaseMessaging } from '~/utils/firebase'
 
 const { public: { firebase: { vapidKey } } } = useRuntimeConfig()
 const subscribed = ref(false)
+const userId = ref()
 const isSubscribedCookie = useCookie('isSubscribedToWebPush', { path: '/', maxAge: 60 * 60 * 24 * 7 })
 
 const isSupported = computed(() => window.Notification && window.PushManager)
 const isGranted = computed(() => window.Notification.permission === 'granted')
 const isDenied = computed(() => window.Notification.permission === 'denied')
+
+onAuthStateChanged(firebaseAuth, async (user) => {
+  userId.value = user?.uid
+})
 
 async function subscribe(value: unknown) {
   console.log(value)
@@ -42,6 +49,9 @@ async function getAndStoreToken() {
       token: currentToken,
     } })
     isSubscribedCookie.value = '1'
+
+    const userRef = doc(firestoreDb, 'users', userId.value)
+    await updateDoc(userRef, { pushToken: currentToken })
   }
 }
 
