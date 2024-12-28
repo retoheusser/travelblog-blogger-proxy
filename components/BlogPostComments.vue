@@ -2,7 +2,7 @@
 import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
 import type { BlogPostComment } from '~/types/firestore.types'
 
-const props = defineProps<{ postId: string }>()
+const props = defineProps<{ postId: string, isAddingComment: boolean }>()
 const emit = defineEmits<{
   (e: 'click:add'): void
 }>()
@@ -44,6 +44,7 @@ onUnmounted(() => {
       </div>
     </div>
     <v-btn
+      v-if="!props.isAddingComment"
       size="x-small"
       variant="tonal"
       class="font-weight-bold"

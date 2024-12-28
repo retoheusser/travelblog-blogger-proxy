@@ -138,6 +138,7 @@ function onIntersect(isIntersecting: boolean) {
         <BlogPostComments
           v-if="textExpanded || paragraphs <= visibleParagrahps"
           :post-id="props.value.id"
+          :is-adding-comment="isAddingComment"
           @click:add="expand(); isAddingComment = true"
         />
         <AddComment
