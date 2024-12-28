@@ -100,19 +100,15 @@ l-26 -55 -5 -935 c-3 -514 -6 -927 -8 -917 -5 38 -52 115 -97 156 -69 64 -124
 
 <style lang="css" scoped>
 @keyframes bounceIn {
-  0%, 20%, 50%, 80%, 100% {
+  0%, 100% {
     transform: translateY(0);
-    opacity: 1;
   }
-  40% {
+  10% {
     transform: translateY(-6px);
-  }
-  60% {
-    transform: translateY(-3px);
   }
 }
 
 .bounce {
-  animation: bounceIn infinite 2s;
+  animation: bounceIn infinite 1s;
 }
 </style>
