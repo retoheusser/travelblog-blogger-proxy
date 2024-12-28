@@ -85,20 +85,10 @@ function onIntersect(isIntersecting: boolean) {
         />
         <LikeBtn :post-id="value.id" />
         <HateBtn :post-id="value.id" />
-        <v-tooltip
-          location="top"
-          text="Senf dazugeben"
-        >
-          <template #activator="{ props: tooltipProps }">
-            <v-btn
-              size="small"
-              icon="mdi-comment"
-              variant="text"
-              v-bind="tooltipProps"
-              @click="expand(); isAddingComment = true"
-            />
-          </template>
-        </v-tooltip>
+        <CommentBtn
+          :post-id="value.id"
+          @click="expand(); isAddingComment = true"
+        />
         <v-tooltip
           location="top"
           text="Aktuelles Bild vergrössern"
