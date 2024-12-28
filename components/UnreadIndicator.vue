@@ -1,10 +1,10 @@
 <script lang="ts" setup>
 import { onAuthStateChanged } from 'firebase/auth'
-import { doc, onSnapshot } from 'firebase/firestore'
+import { doc, getDoc } from 'firebase/firestore'
 
 const props = defineProps<{ postId: string, postPublished: string }>()
 
-const isRead = ref(false)
+const isRead = ref(true)
 const userId = ref()
 const userCreated = ref()
 
@@ -12,20 +12,12 @@ onAuthStateChanged(firebaseAuth, async (user) => {
   userId.value = user?.uid
   userCreated.value = user?.metadata.creationTime
 })
-let unsubscribeReadSnapshot: ReturnType<typeof onSnapshot>
 
 const isUnread = computed(() => !isRead.value && new Date(userCreated.value) < new Date(props.postPublished))
 
 watch(userId, async (uid) => {
-  unsubscribeReadSnapshot = onSnapshot(doc(firestoreDb, 'posts', props.postId, 'read', uid), (snapshot) => {
-    isRead.value = snapshot.data()?.read
-  })
-})
-
-onUnmounted(() => {
-  if (unsubscribeReadSnapshot) {
-    unsubscribeReadSnapshot()
-  }
+  const snapshot = await getDoc(doc(firestoreDb, 'posts', props.postId, 'read', uid))
+  isRead.value = snapshot.data()?.read
 })
 </script>
 
