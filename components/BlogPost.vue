@@ -3,7 +3,12 @@ import { logEvent } from 'firebase/analytics'
 import VueEasyLightbox from 'vue-easy-lightbox'
 import type { BlogPostItem } from '../types/blogger.types'
 
-const props = defineProps<{ value: BlogPostItem }>()
+const props = withDefaults(
+  defineProps<{ value: BlogPostItem, hideControls?: boolean }>(),
+  {
+    hideControls: false,
+  },
+)
 const intersectStore = useIntersectStore()
 const { width: windowWidth } = useWindowSize()
 
@@ -77,7 +82,10 @@ function onIntersect(isIntersecting: boolean) {
     <div v-intersect="onIntersect" />
     <div class="ml-7" />
     <div class="ml-7">
-      <div class="border-left px-4 pt-4 d-flex justify-end">
+      <div
+        v-if="!hideControls"
+        class="border-left px-4 pt-4 d-flex justify-end"
+      >
         <NotificationDispatcher
           :title="props.value.title"
           :paragraphs="paragraphs"
