@@ -70,6 +70,7 @@ function onIntersect(isIntersecting: boolean) {
         show-arrows="hover"
         :height="windowWidth < 500 ? windowWidth : 500"
         hide-delimiter-background
+        :hide-delimiters="hideControls"
       >
         <v-carousel-item
           v-for="image in images"
@@ -84,7 +85,7 @@ function onIntersect(isIntersecting: boolean) {
     <div class="ml-7">
       <div
         v-if="!hideControls"
-        class="border-left px-4 pt-4 d-flex justify-end"
+        class="border-left px-4 pt-4 d-flex justify-end gap-2"
       >
         <NotificationDispatcher
           :title="props.value.title"
@@ -176,5 +177,9 @@ function onIntersect(isIntersecting: boolean) {
 
 .border-left {
   border-left: solid 1px #37503D;
+}
+
+.gap-2 {
+  gap: 8px;
 }
 </style>

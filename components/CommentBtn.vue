@@ -25,7 +25,10 @@ onUnmounted(() => {
   >
     <template #activator="{ props: tooltipProps }">
       <div class="d-flex align-center">
-        <span v-if="commentCount">{{ commentCount }}</span>
+        <span
+          v-if="commentCount"
+          class="mr-n2"
+        >{{ commentCount }}</span>
         <v-btn
           size="small"
           icon="mdi-comment"

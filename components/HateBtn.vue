@@ -54,7 +54,10 @@ onUnmounted(() => {
   >
     <template #activator="{ props: tooltipProps }">
       <div class="d-flex align-center">
-        <span v-if="hateCount">{{ hateCount }}</span>
+        <span
+          v-if="hateCount"
+          class="mr-n2"
+        >{{ hateCount }}</span>
         <v-btn
           size="small"
           variant="text"
