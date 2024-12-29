@@ -9,6 +9,7 @@ const props = defineProps<{ title: string, paragraphs: string[], images: ImagePr
 const showNotificationDispatcher = ref(false)
 const loading = ref(false)
 const sent = ref(false)
+const snackbar = ref(false)
 
 onAuthStateChanged(firebaseAuth, async (user) => {
   if (user) {
@@ -38,21 +39,39 @@ async function send() {
 </script>
 
 <template>
-  <v-tooltip
-    v-if="showNotificationDispatcher"
-    location="top"
-    text="Als Push verschicken"
-  >
-    <template #activator="{ props: tooltipProps }">
-      <v-btn
-        size="small"
-        icon="mdi-bell"
-        variant="text"
-        v-bind="tooltipProps"
-        :loading="loading"
-        :disabled="sent"
-        @click="send"
-      />
-    </template>
-  </v-tooltip>
+  <div>
+    <v-tooltip
+      v-if="showNotificationDispatcher"
+      location="top"
+      text="Als Push verschicken"
+    >
+      <template #activator="{ props: tooltipProps }">
+        <v-btn
+          size="small"
+          icon="mdi-bell"
+          variant="text"
+          v-bind="tooltipProps"
+          :loading="loading"
+          :disabled="sent"
+          @click="snackbar = true"
+        />
+      </template>
+    </v-tooltip>
+    <v-snackbar
+      v-model="snackbar"
+      color="primary"
+      timer
+    >
+      Bitte bestätige das Senden
+
+      <template #actions>
+        <v-btn
+          color="white"
+          @click="send(); snackbar=false"
+        >
+          Bestätigen
+        </v-btn>
+      </template>
+    </v-snackbar>
+  </div>
 </template>
