@@ -1,14 +1,22 @@
 <script lang="ts" setup>
+import { onAuthStateChanged } from 'firebase/auth'
+import { doc, getDoc } from 'firebase/firestore'
 import { $fetch } from 'ofetch'
 import type { ImagePreview } from '~/utils/htmlParser'
 
 const props = defineProps<{ title: string, paragraphs: string[], images: ImagePreview[] }>()
-const route = useRoute()
 
-const showNotificationDispatcher = computed(() => route.query.action === 'notification')
-
+const showNotificationDispatcher = ref(false)
 const loading = ref(false)
 const sent = ref(false)
+
+onAuthStateChanged(firebaseAuth, async (user) => {
+  if (user) {
+    const userRef = doc(firestoreDb, 'users', user.uid)
+    const userInDB = await getDoc(userRef)
+    showNotificationDispatcher.value = userInDB.data()?.admin
+  }
+})
 
 async function send() {
   try {

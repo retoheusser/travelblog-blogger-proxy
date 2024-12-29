@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { setUserId } from 'firebase/analytics'
 import { onAuthStateChanged, setPersistence, signInAnonymously, browserLocalPersistence } from 'firebase/auth'
-import { doc, getDoc, setDoc, updateDoc } from 'firebase/firestore'
+import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
 import { UAParser } from 'ua-parser-js'
 import { firebaseAuth } from '~/utils/firebase'
 
@@ -26,10 +26,16 @@ onAuthStateChanged(firebaseAuth, async (user) => {
       os: parser.getOS().name,
     }
     if (userInDB.exists()) {
-      await updateDoc(userRef, updates)
+      await updateDoc(userRef, {
+        ...updates,
+        lastSeen: serverTimestamp(),
+      })
     }
     else {
-      await setDoc(userRef, updates)
+      await setDoc(userRef, {
+        ...updates,
+        created: serverTimestamp(),
+      })
     }
   }
   else {
