@@ -112,6 +112,7 @@ l-26 -55 -5 -935 c-3 -514 -6 -927 -8 -917 -5 38 -52 115 -97 156 -69 64 -124
 }
 
 .bounce {
-  animation: bounceIn infinite 1s;
+  animation: bounceIn 0.2s;
+  animation-iteration-count: 10;
 }
 </style>

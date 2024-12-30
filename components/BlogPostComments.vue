@@ -1,11 +1,12 @@
 <script lang="ts" setup>
 import { onAuthStateChanged } from 'firebase/auth'
-import { collection, deleteDoc, doc, onSnapshot, orderBy, query, updateDoc, where } from 'firebase/firestore'
+import { collection, deleteDoc, doc, onSnapshot, orderBy, query } from 'firebase/firestore'
 import type { BlogPostComment } from '~/types/firestore.types'
 
 const props = defineProps<{ postId: string, isAddingComment: boolean }>()
 const emit = defineEmits<{
   (e: 'click:add'): void
+  (e: 'click:reply', comment: BlogPostComment): void
 }>()
 
 const comments = ref<(BlogPostComment & { id: string })[]>([])
@@ -53,7 +54,7 @@ onUnmounted(() => {
       <div class="font-italic">
         {{ comment.comment }}
       </div>
-      <v-menu v-if="isCommentAuthor(comment)">
+      <v-menu>
         <template #activator="{ props: menuProps }">
           <v-icon
             class="ml-2"
@@ -64,8 +65,17 @@ onUnmounted(() => {
           </v-icon>
         </template>
         <v-list density="compact">
-          <v-list-item @click="deleteComment(comment)">
+          <v-list-item
+            v-if="isCommentAuthor(comment)"
+            @click="deleteComment(comment)"
+          >
             <v-list-item-title>Kommentar löschen</v-list-item-title>
+          </v-list-item>
+          <v-list-item
+            v-if="!isCommentAuthor(comment)"
+            @click="emit('click:reply', comment)"
+          >
+            <v-list-item-title>Antworten</v-list-item-title>
           </v-list-item>
         </v-list>
       </v-menu>
@@ -77,7 +87,7 @@ onUnmounted(() => {
       class="font-weight-bold"
       @click="emit('click:add')"
     >
-      Kommentar hinzufügen
+      Kommentar / Reisetipps hinzufügen
     </v-btn>
   </div>
 </template>

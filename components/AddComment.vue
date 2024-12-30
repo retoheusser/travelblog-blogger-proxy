@@ -2,8 +2,9 @@
 import { logEvent } from 'firebase/analytics'
 import { onAuthStateChanged, updateProfile } from 'firebase/auth'
 import { addDoc, collection, serverTimestamp } from 'firebase/firestore'
+import type { BlogPostComment } from '~/types/firestore.types'
 
-const props = defineProps<{ postId: string, modelValue: boolean }>()
+const props = defineProps<{ postId: string, modelValue: boolean, replyTo?: BlogPostComment }>()
 const emit = defineEmits<{
   (e: 'update:modelValue', value: boolean): void
 }>()
@@ -15,12 +16,12 @@ const comment = ref('')
 const name = ref('')
 const user = ref()
 const isLoading = ref(false)
-const { modelValue } = toRefs(props)
+const { modelValue, replyTo } = toRefs(props)
 const commentForm = ref<HTMLFormElement & { validate: () => Promise<{ valid: boolean }> }>()
 const commentInput = ref<HTMLInputElement>()
 const nameForm = ref<HTMLFormElement & { validate: () => Promise<{ valid: boolean }> }>()
 
-const requiredRule = (value: string) => !!value || 'Bitte gib etwas ein'
+const requiredRule = (value: string) => !!value.trim() || 'Bitte gib etwas ein'
 
 onAuthStateChanged(firebaseAuth, async (u) => {
   name.value = u?.displayName ?? ''
@@ -44,6 +45,7 @@ async function send() {
         uid: user.value.uid,
         name: name.value,
         timestamp: serverTimestamp(),
+        mentions: replyTo.value?.uid || null,
       })
       await updateProfile(user.value, { displayName: name.value })
       logEvent(firebaseAnalytics, 'comment_post', { post_id: props.postId })
@@ -70,6 +72,10 @@ watch(modelValue, async (isCommenting) => {
       offset: -80,
     })
   }
+})
+
+watch(replyTo, (value) => {
+  comment.value = value ? `@${value?.name} ` : ''
 })
 </script>
 

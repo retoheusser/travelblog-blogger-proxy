@@ -2,6 +2,7 @@
 import { logEvent } from 'firebase/analytics'
 import VueEasyLightbox from 'vue-easy-lightbox'
 import type { BlogPostItem } from '../types/blogger.types'
+import type { BlogPostComment } from '~/types/firestore.types'
 
 const props = withDefaults(
   defineProps<{ value: BlogPostItem, hideControls?: boolean }>(),
@@ -15,6 +16,7 @@ const { width: windowWidth } = useWindowSize()
 const textExpanded = ref(false)
 const carouselIndex = ref(0)
 const isAddingComment = ref(false)
+const replyToComment = ref<BlogPostComment | undefined>()
 
 const postUrlHttps = computed(() => {
   const url = new URL(props.value.url)
@@ -96,7 +98,7 @@ function onIntersect(isIntersecting: boolean) {
         <HateBtn :post-id="value.id" />
         <CommentBtn
           :post-id="value.id"
-          @click="expand(); isAddingComment = true"
+          @click="expand(); isAddingComment = true; replyToComment = undefined;"
         />
         <v-tooltip
           location="top"
@@ -138,11 +140,13 @@ function onIntersect(isIntersecting: boolean) {
           v-if="textExpanded || paragraphs <= visibleParagrahps"
           :post-id="props.value.id"
           :is-adding-comment="isAddingComment"
-          @click:add="expand(); isAddingComment = true"
+          @click:add="expand(); isAddingComment = true; replyToComment = undefined"
+          @click:reply="(comment) => { replyToComment = comment; expand(); isAddingComment = true }"
         />
         <AddComment
           v-model="isAddingComment"
           :post-id="props.value.id"
+          :reply-to="replyToComment"
         />
       </div>
     </div>

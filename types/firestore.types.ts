@@ -4,4 +4,5 @@ export interface BlogPostComment {
   comment: string
   timestamp: string
   id: string
+  mentions?: string
 }
