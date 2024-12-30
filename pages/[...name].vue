@@ -55,6 +55,10 @@ onAuthStateChanged(firebaseAuth, async (user) => {
   <ClientOnly>
     <InstallPrompt />
     <MapBox :coordinates="coordinates" />
+    <v-skeleton-loader
+      v-if="!firstPosts.length"
+      type="card, article"
+    />
     <BlogPost
       v-for="post in firstPosts"
       :key="post.id"
@@ -69,6 +73,9 @@ onAuthStateChanged(firebaseAuth, async (user) => {
       :value="post"
       :increased-font-size="increasedFontSize"
     />
-    <AccessibilityMode v-model="increasedFontSize" />
+    <AccessibilityMode
+      v-if="firstPosts.length"
+      v-model="increasedFontSize"
+    />
   </ClientOnly>
 </template>
