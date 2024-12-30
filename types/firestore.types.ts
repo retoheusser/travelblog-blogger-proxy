@@ -3,4 +3,5 @@ export interface BlogPostComment {
   uid: string
   comment: string
   timestamp: string
+  id: string
 }

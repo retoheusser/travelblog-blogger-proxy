@@ -1,5 +1,6 @@
 <script lang="ts" setup>
-import { collection, onSnapshot, orderBy, query } from 'firebase/firestore'
+import { onAuthStateChanged } from 'firebase/auth'
+import { collection, deleteDoc, doc, onSnapshot, orderBy, query, updateDoc, where } from 'firebase/firestore'
 import type { BlogPostComment } from '~/types/firestore.types'
 
 const props = defineProps<{ postId: string, isAddingComment: boolean }>()
@@ -8,19 +9,29 @@ const emit = defineEmits<{
 }>()
 
 const comments = ref<(BlogPostComment & { id: string })[]>([])
+const userId = ref()
+
+onAuthStateChanged(firebaseAuth, async (user) => {
+  userId.value = user?.uid
+})
 
 const unsubscribe = onSnapshot(
   query(
     collection(firestoreDb, 'posts', props.postId, 'comments'), orderBy('timestamp'),
   ),
   (snapshot) => {
-    comments.value = [
-      ...comments.value,
-      ...snapshot.docChanges()
-        .filter(change => change.type === 'added')
-        .map(addition => ({ ...addition.doc.data() as BlogPostComment, id: addition.doc.id })),
-    ]
-  })
+    comments.value = snapshot.docs.map(doc => ({ ...doc.data(), id: doc.id } as BlogPostComment))
+  },
+)
+
+function isCommentAuthor(comment: BlogPostComment) {
+  return comment.uid === userId.value
+}
+
+function deleteComment(comment: BlogPostComment) {
+  const commentRef = doc(firestoreDb, 'posts', props.postId, 'comments', comment.id)
+  deleteDoc(commentRef)
+}
 
 onUnmounted(() => {
   if (unsubscribe) {
@@ -42,6 +53,22 @@ onUnmounted(() => {
       <div class="font-italic">
         {{ comment.comment }}
       </div>
+      <v-menu v-if="isCommentAuthor(comment)">
+        <template #activator="{ props: menuProps }">
+          <v-icon
+            class="ml-2"
+            size="small"
+            v-bind="menuProps"
+          >
+            mdi-dots-vertical
+          </v-icon>
+        </template>
+        <v-list density="compact">
+          <v-list-item @click="deleteComment(comment)">
+            <v-list-item-title>Kommentar löschen</v-list-item-title>
+          </v-list-item>
+        </v-list>
+      </v-menu>
     </div>
     <v-btn
       v-if="!props.isAddingComment"
