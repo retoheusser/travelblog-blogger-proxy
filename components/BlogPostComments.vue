@@ -42,7 +42,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div class="mt-4">
+  <div class="mt-4 text-body-2">
     <div
       v-for="comment in comments"
       :key="comment.id"

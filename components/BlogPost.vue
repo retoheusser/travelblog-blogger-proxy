@@ -5,9 +5,10 @@ import type { BlogPostItem } from '../types/blogger.types'
 import type { BlogPostComment } from '~/types/firestore.types'
 
 const props = withDefaults(
-  defineProps<{ value: BlogPostItem, hideControls?: boolean }>(),
+  defineProps<{ value: BlogPostItem, hideControls?: boolean, increasedFontSize?: boolean }>(),
   {
     hideControls: false,
+    increasedFontSize: false,
   },
 )
 const intersectStore = useIntersectStore()
@@ -115,7 +116,10 @@ function onIntersect(isIntersecting: boolean) {
           </template>
         </v-tooltip>
       </div>
-      <div class="border-left pa-4 text-body-2">
+      <div
+        class="border-left pa-4"
+        :class="props.increasedFontSize ? 'text-h4' : 'text-body-2'"
+      >
         <p
           v-for="(p, i) in visibleParagrahps"
           :key="i"

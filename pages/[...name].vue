@@ -10,6 +10,7 @@ const posts = computed(() => data.value?.items)
 const coordinates = computed(() => posts.value?.map(({ location }) => location).filter(location => !!location) || [])
 const firstPosts = computed(() => posts.value?.slice(0, 1) ?? [])
 const otherPosts = computed(() => posts.value?.slice(1) ?? [])
+const increasedFontSize = useLocalStorage('increasedFontSize', false)
 
 onAuthStateChanged(firebaseAuth, async (user) => {
   if (user) {
@@ -58,6 +59,7 @@ onAuthStateChanged(firebaseAuth, async (user) => {
       v-for="post in firstPosts"
       :key="post.id"
       :value="post"
+      :increased-font-size="increasedFontSize"
     />
     <IOSPrompt />
     <PushNotificationPrompt />
@@ -65,6 +67,8 @@ onAuthStateChanged(firebaseAuth, async (user) => {
       v-for="post in otherPosts"
       :key="post.id"
       :value="post"
+      :increased-font-size="increasedFontSize"
     />
+    <AccessibilityMode v-model="increasedFontSize" />
   </ClientOnly>
 </template>
