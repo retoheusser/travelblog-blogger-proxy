@@ -40,23 +40,23 @@ async function send() {
 
 <template>
   <div>
-    <v-tooltip
-      v-if="showNotificationDispatcher"
-      location="top"
-      text="Als Push verschicken"
-    >
-      <template #activator="{ props: tooltipProps }">
+    <v-menu v-if="showNotificationDispatcher">
+      <template #activator="{ props: menuProps }">
         <v-btn
           size="small"
-          icon="mdi-bell"
+          icon="mdi-dots-vertical"
           variant="text"
-          v-bind="tooltipProps"
+          v-bind="menuProps"
           :loading="loading"
           :disabled="sent"
-          @click="snackbar = true"
         />
       </template>
-    </v-tooltip>
+      <v-list density="compact">
+        <v-list-item @click="snackbar = true">
+          <v-list-item-title>Push Notification senden</v-list-item-title>
+        </v-list-item>
+      </v-list>
+    </v-menu>
     <v-snackbar
       v-model="snackbar"
       color="primary"
