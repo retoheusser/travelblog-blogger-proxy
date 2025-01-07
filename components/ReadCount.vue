@@ -1,14 +1,20 @@
 <script lang="ts" setup>
 import { onAuthStateChanged } from 'firebase/auth'
-import { collection, doc, onSnapshot, setDoc } from 'firebase/firestore'
+import { collection, doc, onSnapshot, setDoc, getDoc } from 'firebase/firestore'
 
 const props = defineProps<{ postId: string }>()
 
 const userId = ref()
+const userIsAdmin = ref(false)
 const readCount = ref(0)
 
 onAuthStateChanged(firebaseAuth, async (user) => {
   userId.value = user?.uid
+  if (user) {
+    const userRef = doc(firestoreDb, 'users', user.uid)
+    const userInDB = await getDoc(userRef)
+    userIsAdmin.value = userInDB.data()?.admin
+  }
 })
 
 const unsubscribeReadCountCount = onSnapshot(collection(firestoreDb, 'posts', props.postId, 'read'), (snapshot) => {
@@ -35,6 +41,6 @@ onUnmounted(() => {
     v-intersect="onIntersect"
     class="font-italic"
   >
-    <span class="d-none">{{ readCount }} mal gelesen</span>
+    <span v-show="userIsAdmin">{{ readCount }} mal gelesen</span>
   </div>
 </template>
