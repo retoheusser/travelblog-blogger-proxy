@@ -71,4 +71,5 @@ export default defineNuxtConfig({
       nodeVersion: '20',
     },
   },
+  spaLoadingTemplate: false,
 })
