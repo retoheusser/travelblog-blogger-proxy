@@ -7,6 +7,7 @@ export default eventHandler(() => {
   return $fetch<BlogOverview>(`https://www.googleapis.com/blogger/v3/blogs/${blogId}/posts`, {
     params: {
       key: apiKey,
+      maxResults: 100,
     },
   })
 })
