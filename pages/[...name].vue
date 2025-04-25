@@ -3,10 +3,22 @@ import { setUserId } from 'firebase/analytics'
 import { onAuthStateChanged, setPersistence, signInAnonymously, browserLocalPersistence } from 'firebase/auth'
 import { doc, getDoc, serverTimestamp, setDoc, updateDoc } from 'firebase/firestore'
 import { UAParser } from 'ua-parser-js'
+import type { BlogPostItem } from '~/types/blogger.types'
 import { firebaseAuth } from '~/utils/firebase'
 
-const { data } = useFetch('/api/posts')
-const posts = computed(() => data.value?.items)
+const nextPageToken = ref<string | undefined>(undefined)
+const posts = ref<BlogPostItem[]>([])
+
+const { data } = useFetch('/api/posts', {
+  query: { nextPageToken },
+})
+
+watch(data, (v) => {
+  if (v) {
+    posts.value = [...posts.value, ...v.items]
+  }
+})
+
 const coordinates = computed(() => posts.value?.map(({ location }) => location).filter(location => !!location) || [])
 const firstPosts = computed(() => posts.value?.slice(0, 1) ?? [])
 const otherPosts = computed(() => posts.value?.slice(1) ?? [])
@@ -49,6 +61,12 @@ onAuthStateChanged(firebaseAuth, async (user) => {
     }
   }
 })
+
+function onIntersect(isIntersecting: boolean) {
+  if (isIntersecting) {
+    nextPageToken.value = data.value?.nextPageToken
+  }
+}
 </script>
 
 <template>
@@ -72,6 +90,10 @@ onAuthStateChanged(firebaseAuth, async (user) => {
       :key="post.id"
       :value="post"
       :increased-font-size="increasedFontSize"
+    />
+    <v-skeleton-loader
+      v-intersect.quiet="onIntersect"
+      type="card, article"
     />
     <AccessibilityMode
       v-if="firstPosts.length"

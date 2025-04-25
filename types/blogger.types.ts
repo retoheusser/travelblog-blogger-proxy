@@ -2,6 +2,7 @@ export interface BlogOverview {
   kind: string
   items: BlogPostItem[]
   etag: string
+  nextPageToken?: string
 }
 
 export interface BlogPostLocation {
